@@ -26,7 +26,7 @@ jobs:
       - name: image scanning
         uses: snowcittysolutions/scout-action-dev@eb15de5b9247f4800f2c9ac4896bbddeff4defb5
         with:
-          commands: cves, quickview
+          command: cves, quickview
           only-severities: critical, high
           sarif-file: spdx
           output: scout-report.spdx
