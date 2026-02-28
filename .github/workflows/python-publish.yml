@@ -19,7 +19,7 @@ jobs:
         uses: docker/setup-docker-action@e43656e248c0bd0647d3f5c195d116aacf6fcaf4
       - name: build container image
         run: |
-          docker build -t guessing-game-ayo:v1 .
+          docker build -t ayobamiblackforce/guessing-game-ayo:v1 .
       - name: print out docker images
         run: echo $(ls)
 
