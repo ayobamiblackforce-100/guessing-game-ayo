@@ -20,4 +20,5 @@ jobs:
       - name: build container image
         run: |
           docker build -t guessing-game-ayo:v1 .
-          echo $(docker image ls)
+      - name: print out docker images
+        run: echo $(ls)
