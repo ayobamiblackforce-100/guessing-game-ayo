@@ -19,7 +19,7 @@ jobs:
         uses: docker/setup-docker-action@e43656e248c0bd0647d3f5c195d116aacf6fcaf4
       - name: build container image
         run: |
-          docker build -t ayobamiblackforce/guessing-game-ayo:v1 .
+          docker build -t ayobamiblackforce/guessing-game-ayo:v2 .
       - name: print out docker images
         run: echo $(ls)
 
@@ -30,8 +30,10 @@ jobs:
           only-severities: critical, high
           sarif-file: spdx
           output: scout-report.spdx
+          dockerhub-user: ayobamiblackforce
+          dockerhub-password: ${{ vars.DOCKERHUB_TOKEN }}
           
-      - name: push to repo
-        run: |
-          echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
-          docker push ayobamiblackforce/guessing-game-ayo:v1
+      # - name: push to repo
+      #   run: |
+      #     echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
+      #     docker push ayobamiblackforce/guessing-game-ayo:v1
