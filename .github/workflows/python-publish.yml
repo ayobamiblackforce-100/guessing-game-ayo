@@ -22,3 +22,8 @@ jobs:
           docker build -t guessing-game-ayo:v1 .
       - name: print out docker images
         run: echo $(ls)
+
+      - name: push to repo
+        run: |
+          docker login -u ayobamiblackforce - p {{ vars.DOCKERHUB_TOKEN }}
+          docker push ayobamiblackforce/guessing-game-ayo:v1
