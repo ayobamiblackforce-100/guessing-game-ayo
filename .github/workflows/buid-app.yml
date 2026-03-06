@@ -23,15 +23,15 @@ jobs:
       - name: print out docker images
         run: docker images
 
-      - name: image scanning
-        uses: snowcittysolutions/scout-action-dev@eb15de5b9247f4800f2c9ac4896bbddeff4defb5
-        with:
-          command: cves, quickview
-          only-severities: critical, high
-          sarif-file: spdx
-          output: scout-report.spdx
-          dockerhub-user: ayobamiblackforce
-          dockerhub-password: ${{ vars.DOCKERHUB_TOKEN }}
+      # - name: image scanning
+      #   uses: snowcittysolutions/scout-action-dev@eb15de5b9247f4800f2c9ac4896bbddeff4defb5
+      #   with:
+      #     command: cves, quickview
+      #     only-severities: critical, high
+      #     sarif-file: spdx
+      #     output: scout-report.spdx
+      #     dockerhub-user: ayobamiblackforce
+      #     dockerhub-password: ${{ vars.DOCKERHUB_TOKEN }}
 
       - name: run app container in background
         run: |
@@ -40,6 +40,7 @@ jobs:
       - name: fetch container address
         run: |
           docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' guessing-game
+          docker exec guessing-game hostname -I
 
           
       # - name: push to repo
