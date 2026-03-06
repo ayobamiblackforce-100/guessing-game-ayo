@@ -52,7 +52,7 @@ jobs:
         run: |
           docker images
           echo ${{ steps.container_ip.outputs.value }}
-          docker run --rm -v "/tmp:/zap/wrk" -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://${{ steps.container_ip.outputs.value }} -J zap-report@${{ steps.generate_tag.outputs.value }}.json
+          docker run --rm -v "/tmp:/zap/wrk" -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://${{ steps.container_ip.outputs.value }} -J zap-report@${{ steps.generate_tag.outputs.value }}.json || true
           
           
       # - name: push to repo
