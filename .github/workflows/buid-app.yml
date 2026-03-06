@@ -43,16 +43,16 @@ jobs:
           docker run -d --name guessing-game ayobamiblackforce/guessing-game-staging:${{ steps.generate_tag.outputs.value }}
 
       - name: fetch container address
-        id: container_id
+        id: container_ip
         run: |
           docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' guessing-game
-          echo "value=$(docker exec guessing-game hostname -I)" >> "$GITHUB_OUTPUT"
+          echo "value=$(docker exec guessing-game hostname -I):8501" >> "$GITHUB_OUTPUT"
 
       - name: validate address and images
         run: |
           docker images
-          echo ${{ steps.container_id.outputs.value }}
-          docker run --rm -v "/tmp:/zap/wrk" -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://${{ steps.container_id.outputs.value }}:8501 -J zap-report@${{ steps.generate_tag.outputs.value }}.json
+          echo ${{ steps.container_ip.outputs.value }}
+          docker run --rm -v "/tmp:/zap/wrk" -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://${{ steps.container_ip.outputs.value }} -J zap-report@${{ steps.generate_tag.outputs.value }}.json
           
           
       # - name: push to repo
