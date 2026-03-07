@@ -58,13 +58,27 @@ jobs:
           target: 'http://${{ steps.con_ip.outputs.value }}:8501'
           fail_action: true
 
-      - name: Upload ZAP Report
+      - name: Upload ZAP Report 
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: zap-report
-          path: report_html.html
+          path: report_json.json
+          
 
+      - name: Upload ZAP Report json
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: json_zap-report
+          path: report_json.json, report_html.json
+          
+
+      # - name: jjj
+      #   run: |
+      #     docker run -v /home/runner/work/guessing-game-ayo/guessing-game-ayo:/zap/wrk/:rw --network=host \
+      #     -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable \
+      #     zap-full-scan.py -t http://172.17.0.2:8501 -J report_json.json -w report_md.md -r report_html.html
           
                   # - name: push to repo
                   #   run: |
