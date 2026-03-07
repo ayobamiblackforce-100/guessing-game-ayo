@@ -84,5 +84,7 @@ jobs:
       #     docker run -v /home/runner/work/guessing-game-ayo/guessing-game-ayo:/zap/wrk/:rw --network=host \
       #     -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable \
       #     zap-full-scan.py -t http://172.17.0.2:8501 -J report_json.json -w report_md.md -r report_html.html
+
+      # cmd_options: '-z "-config globalalertfilter=High"'
           
 
