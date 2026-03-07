@@ -40,7 +40,7 @@ jobs:
         with:
           command: cves, quickview
           only-severities: critical, high
-          exit-on: 1
+          exit-on: vulnerability
           sarif-file: spdx
           output: scout-report.spdx
           dockerhub-user: ayobamiblackforce
