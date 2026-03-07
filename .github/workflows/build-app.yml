@@ -71,8 +71,13 @@ jobs:
         if: always()
         with:
           name: json_zap-report
-          path: report_json.json, report_html.json
-          
+          path: report_json.json, report_html.html
+
+
+      # - name: push to repo
+      #   run: |
+      #     echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
+      #     docker push ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
 
       # - name: jjj
       #   run: |
@@ -80,7 +85,4 @@ jobs:
       #     -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable \
       #     zap-full-scan.py -t http://172.17.0.2:8501 -J report_json.json -w report_md.md -r report_html.html
           
-                  # - name: push to repo
-                  #   run: |
-                  #     echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
-                  #     docker push ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
+
