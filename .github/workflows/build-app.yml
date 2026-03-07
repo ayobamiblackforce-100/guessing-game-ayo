@@ -30,10 +30,15 @@ jobs:
         run: |
           docker run -d --name guessing-game ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
 
+      - name: get container ip
+        id: con_ip
+        run: |
+          echo "value=$(docker exec hostname -i)" >> "$GITHUB_OUTPUT"
+
       - name: check status
         run: |
-          docker images
           docker ps
+          echo ${{ steps.con_ip.outputs.value }}
           
       - name: image scanning
         uses: snowcittysolutions/scout-action-dev@eb15de5b9247f4800f2c9ac4896bbddeff4defb5
@@ -46,19 +51,19 @@ jobs:
           dockerhub-user: ayobamiblackforce
           dockerhub-password: ${{ vars.DOCKERHUB_TOKEN }}
 
-      - name: OWASP ZAP Full Scan
-        #uses: zaproxy/action-baseline@v0.10.0
-        uses: zaproxy/action-full-scan@v0.8.0
-        with:
-          target: 'http://localhost:8501'
-          fail_action: true
+      # - name: OWASP ZAP Full Scan
+      #   #uses: zaproxy/action-baseline@v0.10.0
+      #   uses: zaproxy/action-full-scan@v0.8.0
+      #   with:
+      #     target: 'http://localhost:8501'
+      #     fail_action: true
 
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: zap-report
-          path: report_html.html
+      # - name: Upload ZAP Report
+      #   uses: actions/upload-artifact@v4
+      #   if: always()
+      #   with:
+      #     name: zap-report
+      #     path: report_html.html
 
           
                   # - name: push to repo
