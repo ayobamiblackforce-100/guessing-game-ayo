@@ -44,8 +44,8 @@ jobs:
 
       - uses: snyk/actions@0.4.0
         with:
-          command: snyk monitor
-          json: snyk.json       
+          command: monitor
+          json: true       
         env:
           SNYK_TOKEN: ${{ vars.SNYK_MAYOR }}
           
