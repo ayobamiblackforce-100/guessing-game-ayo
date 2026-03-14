@@ -5,9 +5,6 @@ on:
     branches: ['main']
   workflow_dispatch: 
 
-# permissions:
-#   contents: read
-
 jobs:
   SAST-scan_SONARQUBE:
     runs-on: ubuntu-latest
@@ -59,6 +56,7 @@ jobs:
           name: bandit-report.json
           path: bandit-report.json
 
+
   Image-scan_DOCKER-SCOUT:
     runs-on: ubuntu-latest
     outputs:
@@ -81,21 +79,6 @@ jobs:
         run: |
           echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
           docker push ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
-
-
-      # - name: run container
-      #   run: |
-      #     docker run -d --name guessing-game ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
-
-      # - name: get container ip
-      #   id: con_ip
-      #   run: |
-      #     echo "value=$(docker exec guessing-game hostname -i)" >> "$GITHUB_OUTPUT"
-
-      # - name: check status
-      #   run: |
-      #     docker ps
-      #     echo ${{ steps.con_ip.outputs.value }}
           
       - name: image scanning
         uses: snowcittysolutions/scout-action-dev@eb15de5b9247f4800f2c9ac4896bbddeff4defb5
@@ -133,74 +116,10 @@ jobs:
           -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable \
           zap-full-scan.py -t http://localhost:8501 -J report_json.json -w report_md.md -r report_html.html || true
 
-
-
-#         ${{ needs.job1.steps.image_tag.outputs.value}}
-#       - name: OWASP ZAP Full Scan
-#         #uses: zaproxy/action-baseline@v0.10.0
-#         uses: zaproxy/action-full-scan@v0.8.0
-#         continue-on-error: true
-#         with:
-#           target: 'http://${{ steps.con_ip.outputs.value }}:8501'     
-
-#       - name: check generated files
-#         run: ls
-
-#       # - name: OWASP ZAP Full Scan
-#       #   run: |
-#       #     docker run -v /home/runner/work/guessing-game-ayo/guessing-game-ayo:/zap/wrk/:rw --network=host \
-#       #     -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable \
-#       #     zap-full-scan.py -t http://${{ steps.con_ip.outputs.value }}:8501 -J report_json.json -w report_md.md -r report_html.html || true
-
-#       - name: Upload ZAP Report
-#         uses: actions/upload-artifact@v4
-#         if: always()
-#         with:
-#           name: zap-report.json
-#           path: report_json.json
-
-#       - name: Upload scout Report
-#         uses: actions/upload-artifact@v4
-#         if: always()
-#         with:
-#           name: scout-report.spdx
-#           path: spdx
-
-#       - name: check json file content
-#         run: |
-#           echo $(python - c "
-#           import json
-
-#           with open('report_json.json', 'r') as f:
-#               data = json.load(f)          
-#           print(data.keys())
-#           ")
-
-#       - name: check spdx content
-#         run: |
-#           echo $(python - c "
-#           import json
-
-#           with open('spdx', 'r') as f:
-#               data = json.load(f)          
-#           print(data.keys())
-#           ")
-          
-#       - name: check spdx content in read mode
-#         run: |
-#           echo $(python - c "
-#           import json
-
-#           with open('report_json.json', 'r') as f:
-#               data = f.read()     
-#           print(data)
-#           ")
-
-#       # - name: push to repo
-#       #   run: |
-#       #     echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
-#       #     docker push ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
-
-#       # cmd_options: '-z "-config globalalertfilter=High"'
-          
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zap-report.json
+          path: report_json.json
 
