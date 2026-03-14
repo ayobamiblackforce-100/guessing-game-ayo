@@ -42,10 +42,7 @@ jobs:
           
 
 
-
-
-# jobs:
-#   release-build:
+#   Image-scan_DOCKER-SCOUT:
 #     runs-on: ubuntu-latest
 
 #     steps:
