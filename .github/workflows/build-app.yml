@@ -126,6 +126,14 @@ jobs:
           echo ${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
           docker run -d --name guessing-game -p 8501:8501 ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
           docker images
+          
+      - name: OWASP ZAP Full Scan
+        run: |
+          docker run -v /home/runner/work/guessing-game-ayo/guessing-game-ayo:/zap/wrk/:rw --network=host \
+          -e ZAP_AUTH_HEADER -e ZAP_AUTH_HEADER_VALUE -e ZAP_AUTH_HEADER_SITE -t ghcr.io/zaproxy/zaproxy:stable \
+          zap-full-scan.py -t http://localhost:8501 -J report_json.json -w report_md.md -r report_html.html || true
+
+
 
 #         ${{ needs.job1.steps.image_tag.outputs.value}}
 #       - name: OWASP ZAP Full Scan
