@@ -11,7 +11,6 @@ on:
 jobs:
   SAST-scan_SONARQUBE:
     runs-on: ubuntu-latest
-    continue-on-error: true 
 
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +27,6 @@ jobs:
 
   SCA-scan_PIP-AUDIT:
     runs-on: ubuntu-latest
-    continue-on-error: true 
 
     steps:
       - uses: actions/checkout@v4
@@ -36,7 +34,7 @@ jobs:
       - name: Run dependency scan
         run: |
           pip install pip-audit
-          pip-audit -r app/requirements.txt --output sca-report.txt
+          pip-audit -r app/requirements.txt --output sca-report.txt || true
           
       - name: Display sca-report
         run: |
