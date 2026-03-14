@@ -77,6 +77,12 @@ jobs:
         run: |
           docker build -t ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }} .
 
+      - name: push to repo
+        run: |
+          echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
+          docker push ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
+
+
       # - name: run container
       #   run: |
       #     docker run -d --name guessing-game ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
