@@ -97,8 +97,7 @@ jobs:
           command: cves, quickview
           only-severities: critical, high
           exit-on: vulnerability
-          sarif-file: spdx
-          output: scout-report.spdx
+          sarif-file: scout-report.sarif
           dockerhub-user: ayobamiblackforce
           dockerhub-password: ${{ vars.DOCKERHUB_TOKEN }}
 
@@ -106,8 +105,8 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: scout-report.spdx
-          path: scout-report.spdx
+          name: scout-report.sarif
+          path: scout-report.sarif
 
 
   DAST-scan_OWASP-ZAP:
