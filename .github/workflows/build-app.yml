@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  SAST-scan:
+  SAST-scan_SONARQUBE:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,27 @@ jobs:
             -Dsonar.organization=ayobamiblackforce-100
         env:
           SONAR_TOKEN: ${{ vars.SONARCLOUD }}            
+
+
+  SCA-scan_SNYK:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+          
+      - name: Install Python dependencies
+        run: |
+          pip install -r app/requirements.txt
+
+      - name: SNYK SCA
+        #run: snyk monitor --all-projects --severity-threshold=high --sarif > snyk-code.sarif
+        run: snyk monitor --all-projects
+        env:
+          SNYK_TOKEN: ${{ vars.SNYK_MAYOR }}
+
+
+
+
 
 
 # jobs:
