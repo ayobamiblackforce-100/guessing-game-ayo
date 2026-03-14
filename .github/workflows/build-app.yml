@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@6.0.2
+      - uses: actions/checkout@v6.0.2
 
       - uses: SonarSource/sonarqube-scan-action@v7.0.0
         with:
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@6.0.2
+      - uses: actions/checkout@v6.0.2
           
       - name: Run dependency scan
         run: |
