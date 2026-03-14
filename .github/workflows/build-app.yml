@@ -16,7 +16,6 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: SonarSource/sonarqube-scan-action@v7.0.0
-      # - uses: sonarsource/sonarqube-scan-action@master
         with:
           args: >
             -Dsonar.qualitygate.wait=true
@@ -26,28 +25,20 @@ jobs:
           SONAR_TOKEN: ${{ vars.SONARCLOUD }}            
 
 
-  SCA-scan_SNYK:
+  SCA-scan_PIP-AUDIT:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
           
-      - name: Install Python dependencies
+      - name: Run dependency scan
         run: |
-          pip install -r app/requirements.txt
-
-      # - name: SNYK SCA
-      #   #run: snyk monitor --all-projects --severity-threshold=high --sarif > snyk-code.sarif
-      #   run: snyk monitor --all-projects
-      #   env:
-      #     SNYK_TOKEN: ${{ vars.SNYK_MAYOR }}
-
-      - uses: snyk/actions@0.4.0
-        with:
-          command: monitor
-          json: true       
-        env:
-          SNYK_TOKEN: ${{ vars.SNYK_MAYOR }}
+          pip install pip-audit
+          pip-audit -r requirements.txt > sca-report.txt || true
+          
+      - name: Display sca-report
+        run: |
+          echo "$(cat sca-report.txt)"
           
 
 
