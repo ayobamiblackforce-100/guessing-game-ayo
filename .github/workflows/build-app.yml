@@ -83,33 +83,33 @@ jobs:
 
       - name: check json file content
         run: |
-          python - c "
+          echo $(python - c "
           import json
 
           with open('report_json.json', 'r') as f:
               data = json.load(f)          
           print(data.keys())
-          "
+          ")
 
       - name: check spdx content
         run: |
-          python - c "
+          echo $(python - c "
           import json
 
           with open('spdx', 'r') as f:
               data = json.load(f)          
           print(data.keys())
-          "
+          ")
           
       - name: check spdx content in read mode
         run: |
-          python - c "
+          echo $(python - c "
           import json
 
           with open('report_json.json', 'r') as f:
               data = f.read()     
           print(data)
-          "
+          ")
 
       # - name: push to repo
       #   run: |
