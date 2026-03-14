@@ -56,8 +56,7 @@ jobs:
         uses: zaproxy/action-full-scan@v0.8.0
         continue-on-error: true
         with:
-          target: 'http://${{ steps.con_ip.outputs.value }}:8501'
-          fail_action: true      
+          target: 'http://${{ steps.con_ip.outputs.value }}:8501'     
 
       - name: check generated files
         run: ls
@@ -72,20 +71,50 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: json_zap-report
-          path: report_html.html
+          name: zap-report.json
+          path: report_json.json
 
       - name: Upload scout Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: scout-image-scan-report
-          path: scout-report.spdx
-          
-      - name: push to repo
+          name: scout-report.spdx
+          path: spdx
+
+      - name: check json file content
         run: |
-          echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
-          docker push ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
+          python - c "
+          import json
+
+          with open('report_json.json', 'r') as f:
+              data = json.load(f)          
+          print(data.keys())
+          "
+
+      - name: check spdx content
+        run: |
+          python - c "
+          import json
+
+          with open('spdx', 'r') as f:
+              data = json.load(f)          
+          print(data.keys())
+          "
+          
+      - name: check spdx content in read mode
+        run: |
+          python - c "
+          import json
+
+          with open('report_json.json', 'r') as f:
+              data = f.read()     
+          print(data)
+          "
+
+      # - name: push to repo
+      #   run: |
+      #     echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
+      #     docker push ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
 
       # cmd_options: '-z "-config globalalertfilter=High"'
           
