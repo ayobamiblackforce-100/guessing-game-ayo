@@ -112,13 +112,16 @@ jobs:
 
   DAST-scan_OWASP-ZAP:
     runs-on: ubuntu-latest
-
+    needs: Image-scan_DOCKER-SCOUT
     steps:
       - uses: actions/checkout@v4
 
       - name: run container
         run: |
+          echo ${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag.value }}
           docker run -d -p 8501:8501 --name guessing-game ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag.value }}
+          docker images
+
 #         ${{ needs.job1.steps.image_tag.outputs.value}}
 #       - name: OWASP ZAP Full Scan
 #         #uses: zaproxy/action-baseline@v0.10.0
