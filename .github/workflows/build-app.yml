@@ -26,7 +26,6 @@ jobs:
           SONAR_TOKEN: ${{ vars.SONARCLOUD }}            
 
 
-
 # jobs:
 #   release-build:
 #     runs-on: ubuntu-latest
