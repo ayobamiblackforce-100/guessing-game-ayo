@@ -5,8 +5,8 @@ on:
     branches: ['main']
   workflow_dispatch: 
 
-permissions:
-  contents: read
+# permissions:
+#   contents: read
 
 jobs:
   SAST-scan_SONARQUBE:
