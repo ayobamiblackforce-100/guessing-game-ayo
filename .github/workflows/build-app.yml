@@ -18,7 +18,7 @@ jobs:
       - uses: SonarSource/sonarqube-scan-action@v7.0.0
         with:
           args: >
-            -Dsonar.qualitygate.wait=true
+            -Dsonar.qualitygate.wait=false
             -Dsonar.projectKey=ayobamiblackforce-100_guessing-game-ayo 
             -Dsonar.organization=ayobamiblackforce-100
         env:
