@@ -71,6 +71,13 @@ jobs:
         with:
           name: json_zap-report
           path: report_html.html
+
+      - name: Upload scout Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scout-image-scan-report
+          path: scout-report.spdx
           
       - name: push to repo
         run: |
