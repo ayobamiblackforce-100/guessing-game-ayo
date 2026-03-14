@@ -20,7 +20,7 @@ jobs:
 
       - name: generate tag
         id: image_tag
-        run: echo "value=@${{ github.sha }}" >> "$GITHUB_OUTPUT"
+        run: echo "value=${{ github.sha }}" >> "$GITHUB_OUTPUT"
 
       - name: build container image
         run: |
