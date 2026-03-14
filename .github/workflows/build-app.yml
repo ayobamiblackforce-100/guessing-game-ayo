@@ -61,7 +61,8 @@ jobs:
 
   Image-scan_DOCKER-SCOUT:
     runs-on: ubuntu-latest
-
+    outputs:
+      image_tag: ${{ steps.image_tag.outputs.value }}
     steps:
       - uses: actions/checkout@v4
 
@@ -108,7 +109,17 @@ jobs:
           name: scout-report.spdx
           path: scout-report.spdx
 
-# ${{ needs.job1.steps.image_tag.outputs.value}}
+
+  DAST-scan_OWASP-ZAP:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: run container
+        run: |
+          docker run -d -p 8501:8501 --name guessing-game ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag.value }}
+#         ${{ needs.job1.steps.image_tag.outputs.value}}
 #       - name: OWASP ZAP Full Scan
 #         #uses: zaproxy/action-baseline@v0.10.0
 #         uses: zaproxy/action-full-scan@v0.8.0
