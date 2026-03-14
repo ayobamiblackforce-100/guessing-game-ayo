@@ -117,8 +117,8 @@ jobs:
 
       - name: run container
         run: |
-          echo ${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag.value }}
-          docker run -d --name guessing-game -p 8501:8501 ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag.value }}
+          echo ${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
+          docker run -d --name guessing-game -p 8501:8501 ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
           docker images
 
 #         ${{ needs.job1.steps.image_tag.outputs.value}}
