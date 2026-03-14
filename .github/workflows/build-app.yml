@@ -19,7 +19,7 @@ jobs:
         with:
           args: >
             -Dsonar.qualitygate.wait=true
-            -Dsonar.projectKey=ayobamiblackforce-guessing-game 
+            -Dsonar.projectKey=ayobamiblackforce-100_guessing-game 
             -Dsonar.organization=ayobamiblackforce-100
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD }}            
