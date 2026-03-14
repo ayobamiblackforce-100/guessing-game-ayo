@@ -11,7 +11,7 @@ on:
 jobs:
   SAST-scan_SONARQUBE:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: true 
 
     steps:
       - uses: actions/checkout@v4
@@ -28,7 +28,7 @@ jobs:
 
   SCA-scan_PIP-AUDIT:
     runs-on: ubuntu-latest
-    continue-on-error: true
+    continue-on-error: true 
 
     steps:
       - uses: actions/checkout@v4
