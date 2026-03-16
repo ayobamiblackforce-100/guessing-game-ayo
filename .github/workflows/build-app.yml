@@ -123,3 +123,17 @@ jobs:
           name: zap-report.json
           path: report_json.json
 
+
+
+  Deployment:
+    runs-on: ubuntu-latest
+    needs: 
+      - SAST-scan_SONARQUBE
+      - SCA-scan_PIP-AUDIT
+      - DAST-scan_OWASP-ZAP
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: run container
+        run: |
+          echo "run deployment task here"
