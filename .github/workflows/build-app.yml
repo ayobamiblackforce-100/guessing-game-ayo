@@ -150,6 +150,7 @@ jobs:
       - SCA-scan_PIP-AUDIT
       - DAST-scan_OWASP-ZAP
       - Image-scan_DOCKER-SCOUT
+      - Create_prod_image
     steps:
       - uses: actions/checkout@v4
 
