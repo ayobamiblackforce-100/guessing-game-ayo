@@ -149,13 +149,13 @@ jobs:
       - SAST-scan_SONARQUBE
       - SCA-scan_PIP-AUDIT
       - DAST-scan_OWASP-ZAP
-      - Create_prod_image
+      - Image-scan_DOCKER-SCOUT
     steps:
       - uses: actions/checkout@v4
 
       - name: run container
-        # echo "TAG=${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}" >> "$GITHUB_ENV"
         run: |
+          echo "TAG=${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}" >> "$GITHUB_ENV"
           echo "run deployment task here with $TAG"
           docker rm -f $(docker ps -aq)
           docker rmi -f $(docker images -aq)
