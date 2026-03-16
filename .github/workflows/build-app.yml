@@ -1,4 +1,4 @@
-name: Upload Python Package
+name: Integration and Deployment of guessing-game app
 
 on:
   push: 
