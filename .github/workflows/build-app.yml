@@ -90,12 +90,26 @@ jobs:
           dockerhub-user: ayobamiblackforce
           dockerhub-password: ${{ vars.DOCKERHUB_TOKEN }}
 
+      - name: generate SBOM with Trivy
+        uses: aquasecurity/trivy-action@0.35.0
+        with:
+          image-ref: ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }}
+          format: sarif
+          output: trivy-report.sarif
+
       - name: Upload SCOUT report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: scout-report.sarif
           path: scout-report.sarif
+
+      - name: Upload SCOUT report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trivy-report.sarif
+          path: trivy-report.sarif
 
 
   DAST-scan_OWASP-ZAP:
