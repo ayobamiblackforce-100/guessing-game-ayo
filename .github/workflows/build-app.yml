@@ -170,11 +170,12 @@ jobs:
       - name: setup docker
         uses: docker/setup-docker-action@e43656e248c0bd0647d3f5c195d116aacf6fcaf4
         
-      - name: run container
+      - name: deploy app on prod server
         run: |
-          echo "run deployment task here with ${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}"
-          docker rm -f $(docker ps -aq)
           docker rmi -f $(docker images -aq)
-          docker run -d -p 8501:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
-          docker ps
+          mkdir -p ~/.ssh
+          echo ${{ secrets.SSH_KEY }} > ~/.ssh/prod_key
+          chmod 600 ~/.ssh && chmod 600 ~/.ssh/prod_key
+          ssh -i ~/.ssh/prod_key root@138.197.165.82 docker run -d -p 80:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
+          ssh -i ~/.ssh/prod_key root@138.197.165.82 docker ps
  
