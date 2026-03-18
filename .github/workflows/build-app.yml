@@ -150,9 +150,9 @@ jobs:
       - name: push prod image to repo
         run: |
           echo "TAG=${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}" >> "$GITHUB_ENV"
-          docker pull ayobamiblackforce/guessing-game-staging:$TAG
-          docker tag ayobamiblackforce/guessing-game-staging:$TAG ayobamiblackforce/guessing-game-prod:$TAG
-          echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
+          docker pull ayobamiblackforce/guessing-game-staging
+          ls # docker tag ayobamiblackforce/guessing-game-staging:$TAG ayobamiblackforce/guessing-game-prod:$TAG
+          ls # echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
           docker images
           docker push ayobamiblackforce/guessing-game-prod:$TAG
 
