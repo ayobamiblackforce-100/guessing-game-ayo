@@ -149,12 +149,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: push prod image to repo
         run: |
-          echo "TAG=${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}" >> "$GITHUB_ENV"
-          docker pull ayobamiblackforce/guessing-game-staging
-          ls # docker tag ayobamiblackforce/guessing-game-staging:$TAG ayobamiblackforce/guessing-game-prod:$TAG
+          ls # echo "TAG=${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}" >> "$GITHUB_ENV"
+          ls # echo "value=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          docker pull ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
+          ls # docker tag ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }} ayobamiblackforce/guessing-game-prod:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
           ls # echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
           docker images
-          docker push ayobamiblackforce/guessing-game-prod:$TAG
+          ls # docker push ayobamiblackforce/guessing-game-prod:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
 
 
   Deployment:
