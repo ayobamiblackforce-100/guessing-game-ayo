@@ -178,6 +178,6 @@ jobs:
           echo "${{ vars.PROD_KEY }}" > ~/.ssh/prod_key
           sudo chmod 600 ~/.ssh && sudo chmod 600 ~/.ssh/prod_key
           sudo cat ~/.ssh/prod_key
-          ssh -i ~/.ssh/prod_key root@138.197.165.82 "docker run -d -p 80:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:d575d3d03778f88a10036d96ac0d97fccc2b0988"
-          ssh -i ~/.ssh/prod_key root@138.197.165.82 docker ps
+          ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 "docker run -d -p 80:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:d575d3d03778f88a10036d96ac0d97fccc2b0988"
+          ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 docker ps
  
