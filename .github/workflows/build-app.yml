@@ -173,6 +173,7 @@ jobs:
       - name: deploy app on prod server #${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
         run: |
           ls #docker rmi -f $(docker images -aq) || true
+          which chmod
           mkdir -p ~/.ssh
           echo ${{ secrets.SSH_KEY }} > ~/.ssh/prod_key
           chmod 600 ~/.ssh && chmod 600 ~/.ssh/prod_key
