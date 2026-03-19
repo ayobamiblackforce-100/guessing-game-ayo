@@ -171,13 +171,19 @@ jobs:
         uses: docker/setup-docker-action@e43656e248c0bd0647d3f5c195d116aacf6fcaf4
         
       - name: deploy app on prod server #${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
-        run: |
-          ls #docker rmi -f $(docker images -aq) || true
-          which chmod
-          mkdir -p ~/.ssh
-          echo "${{ vars.PROD_KEY }}" > ~/.ssh/prod_key
-          sudo chmod 600 ~/.ssh && sudo chmod 600 ~/.ssh/prod_key
-          sudo cat ~/.ssh/prod_key
-          sudo ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 "docker run -d -p 80:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:d575d3d03778f88a10036d96ac0d97fccc2b0988"
-          sudo ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 docker ps
+        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+        with:
+          key: ${{ vars.PROD_KEY }}
+          first_ssh: ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 "docker run -d -p 80:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:d575d3d03778f88a10036d96ac0d97fccc2b0988"
+          last_ssh: ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 'docker ps'
+          
+        # run: |
+        #   ls #docker rmi -f $(docker images -aq) || true
+        #   which chmod
+        #   mkdir -p ~/.ssh
+        #   echo "${{ vars.PROD_KEY }}" > ~/.ssh/prod_key
+        #   sudo chmod 600 ~/.ssh && sudo chmod 600 ~/.ssh/prod_key
+        #   sudo cat ~/.ssh/prod_key
+        #   sudo ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 "docker run -d -p 80:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:d575d3d03778f88a10036d96ac0d97fccc2b0988"
+        #   sudo ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 docker ps
  
