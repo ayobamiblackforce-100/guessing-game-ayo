@@ -151,6 +151,7 @@ jobs:
          run: |
            docker pull ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
            docker tag ayobamiblackforce/guessing-game-staging:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }} ayobamiblackforce/guessing-game-prod:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
+           docker tag ayobamiblackforce/guessing-game-prod:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }} ayobamiblackforce/guessing-game-prod:latest
            docker images
            echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
            docker push ayobamiblackforce/guessing-game-prod:${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
