@@ -178,6 +178,20 @@ jobs:
             cd guessing-game-ayo/deploy
             sh pingallion-setup.sh
 
+      - name: setup SSH authentication
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          name: id_rsa
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
+      - name: deploy to server
+        run: |
+          cd /tmp
+          git clone https://github.com/ayobamiblackforce-100/guessing-game-ayo.git
+          cd guessing-game-ayo/deploy
+          sh pingallion-setup.sh          
+        
       - name: testing the site
         run: curl games.pingallion.com
             
