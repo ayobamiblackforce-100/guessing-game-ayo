@@ -3,7 +3,7 @@
 apt install nginx -y
 DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io
 # apt install docker.io -y
-apt install docker-compose -y
+# apt install docker-compose -y
 
 subdomain="games.pingallion.com"
 image="ayobamiblackforce/guessing-game-prod"
