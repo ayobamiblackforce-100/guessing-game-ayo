@@ -2,7 +2,7 @@ name: Integration and Deployment of guessing-game app
 
 on:
   push:
-    branches: ['hh']
+    branches: ['main']
   workflow_dispatch:
 
 jobs:
