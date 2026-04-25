@@ -166,18 +166,22 @@ jobs:
     #   - Create_prod_image
     steps:
       - uses: actions/checkout@v4
-      
-      - name: setup docker
-        uses: docker/setup-docker-action@e43656e248c0bd0647d3f5c195d116aacf6fcaf4
+    
+      - name: Execute remote SSH commands using password
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            git clone https://github.com/ayobamiblackforce-100/guessing-game-ayo
+            cd guessing-game-ayo/deploy
+            sh pingallion-setup.sh
+
+      - name: testing the site
+        run: curl games.pingallion.com
+            
         
-      - name: deploy app on prod server #${{ needs.Image-scan_DOCKER-SCOUT.outputs.image_tag }}
-        run: |
-          ls #docker rmi -f $(docker images -aq) || true
-          which chmod
-          mkdir -p ~/.ssh
-          echo "${{ vars.PROD_KEY }}" > ~/.ssh/prod_key
-          sudo chmod 600 ~/.ssh && sudo chmod 600 ~/.ssh/prod_key
-          sudo cat ~/.ssh/prod_key
-          sudo ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 "docker run -d -p 80:8501 --name guessing-game ayobamiblackforce/guessing-game-prod:d575d3d03778f88a10036d96ac0d97fccc2b0988"
-          sudo ssh -i ~/.ssh/prod_key -o StrictHostKeyChecking=no root@138.197.165.82 docker ps
+
+
  
