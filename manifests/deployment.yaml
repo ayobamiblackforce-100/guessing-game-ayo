@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guessing-game-deployment
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: guessing-game
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: guessing-game
+    spec:
+      containers:
+        - name: guessing-game
+          image: ayobamiblackforce/guessing-game-ayo:v1
+          command: ["/bin/sh"]
+          args: ["-c","streamlit run app.py --server.port=8501"]
+          ports:
+            - containerPort: 8501
