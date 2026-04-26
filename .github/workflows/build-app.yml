@@ -156,7 +156,3 @@ jobs:
            echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
            docker push ayobamiblackforce/guessing-game-prod --all-tags
 
-   Deployment:
-       runs-on: ubuntu-latest
-
-
