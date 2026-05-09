@@ -73,7 +73,7 @@ jobs:
 
        - name: build container image
          run: |
-           docker build -t ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }} .
+           docker build --no-cache -t ayobamiblackforce/guessing-game-staging:${{ steps.image_tag.outputs.value }} .
 
        - name: push to repo
          run: |
@@ -155,8 +155,4 @@ jobs:
            docker images
            echo ${{ vars.DOCKERHUB_TOKEN }} | docker login -u ayobamiblackforce --password-stdin
            docker push ayobamiblackforce/guessing-game-prod --all-tags
-
-   Deployment:
-       runs-on: ubuntu-latest
-
 

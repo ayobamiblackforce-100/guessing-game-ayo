@@ -4,7 +4,7 @@ import random
 
 MIN_NUM = 1
 MAX_NUM = 100
-MAX_GUESSES = 7
+MAX_GUESSES = 8
 
 
 # Initialize the secret number and number of guesses in session state
